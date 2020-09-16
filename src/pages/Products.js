@@ -13,6 +13,8 @@ import {
   Button
 } from "reactstrap";
 
+import { CartContext } from "../contexts/Cart";
+
 class Products extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,7 @@ class Products extends Component {
   }
   async componentDidMount() {
     await axios
-      .get("https://0d0se.sse.codesandbox.io/products")
+      .get("https://3i7ib.sse.codesandbox.io/products")
       .then((response) => {
         this.setState({ products: response.data });
       })
@@ -38,13 +40,19 @@ class Products extends Component {
         <h2>Products</h2>
         <Row>
           {products.map((products, index) => (
-            <Col sm="3" key={index}>
+            <Col sm="4" key={index}>
               <Card>
                 <CardImg top width="100%" src={products.imageUrl} />
                 <CardBody>
                   <CardTitle>{products.name}</CardTitle>
                   <CardText>{products.descriptions}</CardText>
-                  <Button>Add to card</Button>
+                  <CartContext.Consumer>
+                    {({ addToCart }) => (
+                      <Button onClick={() => addToCart(products)}>
+                        Add to card
+                      </Button>
+                    )}
+                  </CartContext.Consumer>
                 </CardBody>
               </Card>
             </Col>

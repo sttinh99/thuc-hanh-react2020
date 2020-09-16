@@ -7,19 +7,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import TopMenu from "./components/TopMenu";
 import Products from "./pages/Products";
 
+import { CartProvider } from "./contexts/Cart";
+
 export default function App() {
   return (
-    <Router>
-      <div className="App">
-        <TopMenu />
-        <Route path="/" exact>
-          <Home />
-        </Route>
-        <Route path="/products">
-          <Products />
-        </Route>
-      </div>
-    </Router>
+    <CartProvider>
+      <Router>
+        <div className="App">
+          <TopMenu />
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/products">
+            <Products />
+          </Route>
+        </div>
+      </Router>
+    </CartProvider>
   );
 }
 function Home() {
